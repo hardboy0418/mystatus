@@ -891,4 +891,4 @@
 "wifi.reenterPassword" = "重新輸入密碼";
 "wifi.forgetNetwork" = "忘記此網路";
 "settings.network.wifiJoining" = "在面板中加入網路";
-"settings.network.wifiJoiningDescription" = "在狀態面板中點按網路即可加入。密碼僅保存在本應用自己的鑰匙圈項目中，絕不讀取系統已存密碼。顯示網路名稱需要定位權限。";
+"settings.network.wifiJoining.description" = "在狀態面板中點按網路即可加入。密碼僅保存在本應用自己的鑰匙圈項目中，絕不讀取系統已存密碼。顯示網路名稱需要定位權限。";
