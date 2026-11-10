@@ -1,0 +1,31 @@
+name: Dev Build (fork)
+
+# Fork-only convenience workflow: build an ad-hoc signed StatusTrio.app for
+# local testing without going through the release preflight. Not for
+# distribution — the privileged helper will not work under ad-hoc signing.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: xcode-27
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.app/Contents/Developer
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build app bundle
+        run: bash scripts/build-app.sh release no-open
+
+      - name: Upload StatusTrio.app
+        uses: actions/upload-artifact@v4
+        with:
+          name: StatusTrio-dev-app
+          path: dist/StatusTrio.app
+          compression-level: 9
