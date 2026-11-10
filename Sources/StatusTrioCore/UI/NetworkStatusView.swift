@@ -178,6 +178,10 @@ struct NetworkStatusView: View {
         case .none, .batteryDetails,
              .requestBluetoothAuthorization, .openBluetoothPermissionSettings:
             break
+        case .joinIssue:
+            // The join-issue intent is only produced on the Wi-Fi details
+            // page, never on this summary row.
+            break
         }
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import LocalAuthentication
 import Security
 
 /// App-owned Wi-Fi credential storage. Two deliberate boundaries, recorded in
@@ -7,8 +8,9 @@ import Security
 /// - The store only ever touches Status Trio's own generic-password items. It
 ///   never reads the system "AirPort network password" items, so no keychain
 ///   authorization prompt can appear during an ordinary click.
-/// - All reads use `kSecUseAuthenticationUIFail`, so a locked keychain or an
-///   ACL mismatch surfaces as `.readFailed` instead of a system dialog.
+/// - All reads use an `LAContext` with interaction disallowed, so a locked
+///   keychain or an ACL mismatch surfaces as `.readFailed` instead of a system
+///   dialog.
 protocol WiFiCredentialStoring: AnyObject {
     /// Resolves a credential only for a user-selected network. Callers must
     /// never invoke this while scanning nearby networks.
@@ -88,8 +90,11 @@ final class KeychainWiFiPasswordStore: WiFiCredentialStoring, @unchecked Sendabl
 
     private func readQuery(for identity: WiFiNetworkIdentity) -> [String: Any] {
         var query = identityQuery(for: identity)
-        // Never raise a system prompt from this store.
-        query[kSecUseAuthenticationUI as String] = kSecUseAuthenticationUIFail
+        // Never raise a system prompt from this store: a context with
+        // interaction disallowed fails the read instead of asking.
+        let context = LAContext()
+        context.interactionNotAllowed = true
+        query[kSecUseAuthenticationContext as String] = context
         query[kSecMatchLimit as String] = kSecMatchLimitOne
         query[kSecReturnData as String] = true
         return query
