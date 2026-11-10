@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "يعرض خيارات الصوت المكاني (إيقاف/ثابت/تتبع الرأس) في صف إخراج AirPods. يدعم AirPods فقط حالياً.";
 "settings.audio.conversationAwarenessControlsTitle" = "إظهار عناصر تحكم الوعي بالمحادثة";
 "settings.audio.conversationAwarenessControlsDescription" = "يعرض مفتاح الوعي بالمحادثة في صف إخراج AirPods. يدعم AirPods فقط حالياً.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "جارٍ الانضمام إلى %@…";
+"wifi.connectionFailed" = "تعذّر الانضمام إلى هذه الشبكة. تحقق من كلمة السر وحاول مجددًا.";
+"wifi.connectionTimedOut" = "انتهت مهلة الانضمام إلى هذه الشبكة.";
+"wifi.networkUnavailable" = "لم تعد هذه الشبكة متاحة.";
+"wifi.joinNetwork" = "الانضمام إلى شبكة Wi-Fi";
+"wifi.password" = "كلمة السر";
+"wifi.rememberPassword" = "تذكّر كلمة السر في سلسلة المفاتيح";
+"wifi.passwordKeychainNote" = "لا تُحفظ كلمات السر إلا في سلسلة المفاتيح، ولا تُحفظ أبدًا في إعدادات التطبيق.";
+"wifi.join" = "انضمام";
+"wifi.reenterPassword" = "إعادة إدخال كلمة السر";
+"wifi.forgetNetwork" = "تجاهل هذه الشبكة";
+"settings.network.wifiJoining" = "الانضمام إلى الشبكات من اللوحة";
+"settings.network.wifiJoining.description" = "اضغط على شبكة في لوحة الحالة للانضمام إليها. تُحفظ كلمات السر فقط في عناصر سلسلة المفاتيح الخاصة بهذا التطبيق ولا تُقرأ من عناصر النظام إطلاقًا. يتطلب عرض أسماء الشبكات إذن الوصول إلى الموقع.";

@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "AirPods 출력 행에 공간 음향 옵션(끔/고정/머리 추적)을 표시합니다. 현재 AirPods만 지원합니다.";
 "settings.audio.conversationAwarenessControlsTitle" = "대화 인식 제어 표시";
 "settings.audio.conversationAwarenessControlsDescription" = "AirPods 출력 행에 대화 인식 스위치를 표시합니다. 현재 AirPods만 지원합니다.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "%@에 연결 중…";
+"wifi.connectionFailed" = "이 네트워크에 연결하지 못했습니다. 암호를 확인하고 다시 시도하십시오.";
+"wifi.connectionTimedOut" = "이 네트워크 연결 시간이 초과되었습니다.";
+"wifi.networkUnavailable" = "이 네트워크는 더 이상 사용할 수 없습니다.";
+"wifi.joinNetwork" = "Wi-Fi 네트워크 연결";
+"wifi.password" = "암호";
+"wifi.rememberPassword" = "키체인에 암호 저장";
+"wifi.passwordKeychainNote" = "암호는 키체인에만 저장되며 앱 설정에는 저장되지 않습니다.";
+"wifi.join" = "연결";
+"wifi.reenterPassword" = "암호 다시 입력";
+"wifi.forgetNetwork" = "이 네트워크 삭제";
+"settings.network.wifiJoining" = "패널에서 네트워크 연결";
+"settings.network.wifiJoining.description" = "상태 패널에서 네트워크를 탭하여 연결합니다. 암호는 이 앱 전용 키체인 항목에만 저장되며 시스템 항목은 읽지 않습니다. 네트워크 이름을 보려면 위치 접근 권한이 필요합니다.";

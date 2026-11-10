@@ -79,7 +79,8 @@ enum WiFiPowerControlVisibility {
         case .wifiDetails, .requestWiFiNameAccess, .locationSettings:
             return true
         case .none, .batteryDetails, .wiredDetails,
-             .requestBluetoothAuthorization, .openBluetoothPermissionSettings:
+             .requestBluetoothAuthorization, .openBluetoothPermissionSettings,
+             .joinIssue:
             return false
         }
     }

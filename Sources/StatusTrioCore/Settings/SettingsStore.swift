@@ -108,6 +108,7 @@ final class SettingsStore: ObservableObject {
     static let showsBluetoothBatteryLevelsDefaultsKey = "showsBluetoothBatteryLevels"
     static let showsWiFiPowerControlDefaultsKey = "showsWiFiPowerControl"
     static let confirmsWiFiPowerOffDefaultsKey = "confirmsWiFiPowerOff"
+    static let allowsInAppWiFiJoiningDefaultsKey = "allowsInAppWiFiJoining"
     static let showsBluetoothPowerControlDefaultsKey = "showsBluetoothPowerControl"
     static let controlsLowPowerModeDefaultsKey = "controlsLowPowerMode"
     static let autoEnablesLowPowerModeDefaultsKey = "autoEnablesLowPowerMode"
@@ -802,6 +803,16 @@ final class SettingsStore: ObservableObject {
     @Published var confirmsWiFiPowerOff: Bool {
         didSet {
             defaults.set(confirmsWiFiPowerOff, forKey: Self.confirmsWiFiPowerOffDefaultsKey)
+        }
+    }
+
+    /// Opt-in experiment: join Wi-Fi networks from the popover instead of
+    /// opening System Settings. Passwords live only in the app's own keychain
+    /// items, never in defaults and never read from the system AirPort items.
+    /// Off by default, matching the upstream policy.
+    @Published var allowsInAppWiFiJoining: Bool {
+        didSet {
+            defaults.set(allowsInAppWiFiJoining, forKey: Self.allowsInAppWiFiJoiningDefaultsKey)
         }
     }
 
@@ -2271,6 +2282,7 @@ final class SettingsStore: ObservableObject {
         ) as? Bool ?? true
         self.showsWiFiPowerControl = defaults.object(forKey: Self.showsWiFiPowerControlDefaultsKey) as? Bool ?? true
         self.confirmsWiFiPowerOff = defaults.object(forKey: Self.confirmsWiFiPowerOffDefaultsKey) as? Bool ?? true
+        self.allowsInAppWiFiJoining = defaults.object(forKey: Self.allowsInAppWiFiJoiningDefaultsKey) as? Bool ?? false
         self.showsBluetoothPowerControl = defaults.object(
             forKey: Self.showsBluetoothPowerControlDefaultsKey
         ) as? Bool ?? true

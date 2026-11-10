@@ -17,6 +17,9 @@ enum PanelSummaryIntent: Equatable, Sendable {
     case wiredDetails
     case requestBluetoothAuthorization
     case openBluetoothPermissionSettings
+    /// A Wi-Fi join attempt failed; the message row offers the re-enter and
+    /// forget healing actions next to the failure text.
+    case joinIssue
 }
 
 struct PanelSummaryState: Equatable, Sendable {

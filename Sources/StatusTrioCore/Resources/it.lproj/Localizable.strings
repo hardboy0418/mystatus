@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Mostra le opzioni audio spaziale (Disattivato/Fisso/Inseguimento testa) nella riga di uscita AirPods. Al momento solo AirPods.";
 "settings.audio.conversationAwarenessControlsTitle" = "Mostra controlli Consapevolezza conversazione";
 "settings.audio.conversationAwarenessControlsDescription" = "Mostra l’interruttore Consapevolezza conversazione nella riga di uscita AirPods. Al momento solo AirPods.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Connessione a %@…";
+"wifi.connectionFailed" = "Impossibile unirsi a questa rete. Controlla la password e riprova.";
+"wifi.connectionTimedOut" = "Timeout durante la connessione a questa rete.";
+"wifi.networkUnavailable" = "Questa rete non è più disponibile.";
+"wifi.joinNetwork" = "Unisciti a una rete Wi-Fi";
+"wifi.password" = "Password";
+"wifi.rememberPassword" = "Ricorda la password nel Portachiavi";
+"wifi.passwordKeychainNote" = "Le password vengono salvate solo nel Portachiavi, mai nelle impostazioni dell’app.";
+"wifi.join" = "Unisciti";
+"wifi.reenterPassword" = "Reinserisci password";
+"wifi.forgetNetwork" = "Dimentica questa rete";
+"settings.network.wifiJoining" = "Accedi alle reti dal pannello";
+"settings.network.wifiJoining.description" = "Tocca una rete nel pannello di stato per accedervi. Le password sono salvate solo negli elementi del portachiavi di questa app, mai lette dagli elementi di sistema. Richiede l'accesso alla posizione per vedere i nomi delle reti.";

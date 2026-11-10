@@ -634,6 +634,9 @@ enum LocalizationKey: String, CaseIterable, Hashable, Sendable {
     case settingsNetworkPanelGroup = "settings.network.panelGroup"
     case settingsNetworkShowLocalIP = "settings.network.showLocalIP"
     case settingsNetworkShowLocalIPDescription = "settings.network.showLocalIP.description"
+    /// Opt-in experiment: join Wi-Fi networks from the popover.
+    case settingsNetworkWiFiJoining = "settings.network.wifiJoining"
+    case settingsNetworkWiFiJoiningDescription = "settings.network.wifiJoining.description"
 
     /// The Wi-Fi details page and the network settings pane both surface the
     /// location permission macOS needs to read a Wi-Fi name. `.notDetermined`
@@ -702,6 +705,18 @@ enum LocalizationKey: String, CaseIterable, Hashable, Sendable {
     case wifiConnected = "wifi.connected"
     case wifiNotConnected = "wifi.notConnected"
     case wifiHiddenNetwork = "wifi.hiddenNetwork"
+    /// In-app joining (opt-in experiment).
+    case wifiJoinNetwork = "wifi.joinNetwork"
+    case wifiPassword = "wifi.password"
+    case wifiRememberPassword = "wifi.rememberPassword"
+    case wifiPasswordKeychainNote = "wifi.passwordKeychainNote"
+    case wifiJoin = "wifi.join"
+    case wifiConnecting = "wifi.connecting"
+    case wifiConnectionFailed = "wifi.connectionFailed"
+    case wifiConnectionTimedOut = "wifi.connectionTimedOut"
+    case wifiNetworkUnavailable = "wifi.networkUnavailable"
+    case wifiReenterPassword = "wifi.reenterPassword"
+    case wifiForgetNetwork = "wifi.forgetNetwork"
     case wifiDetailsShow = "wifi.details.show"
     case wifiDetailsHide = "wifi.details.hide"
     case wifiDetailsMore = "wifi.details.more"

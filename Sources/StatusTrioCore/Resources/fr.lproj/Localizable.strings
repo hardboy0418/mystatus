@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Affiche les options d'audio spatial (Désactivé/Fixe/Suivi de la tête) sur la ligne de sortie AirPods. AirPods uniquement pour l'instant.";
 "settings.audio.conversationAwarenessControlsTitle" = "Afficher les commandes de conscience de la conversation";
 "settings.audio.conversationAwarenessControlsDescription" = "Affiche le réglage de conscience de la conversation sur la ligne de sortie AirPods. AirPods uniquement pour l'instant.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Connexion à %@…";
+"wifi.connectionFailed" = "Impossible de rejoindre ce réseau. Vérifiez son mot de passe et réessayez.";
+"wifi.connectionTimedOut" = "Le délai de connexion à ce réseau a expiré.";
+"wifi.networkUnavailable" = "Ce réseau n’est plus disponible.";
+"wifi.joinNetwork" = "Rejoindre un réseau Wi-Fi";
+"wifi.password" = "Mot de passe";
+"wifi.rememberPassword" = "Mémoriser le mot de passe dans le trousseau";
+"wifi.passwordKeychainNote" = "Les mots de passe sont stockés uniquement dans votre trousseau, jamais dans les réglages de l’app.";
+"wifi.join" = "Rejoindre";
+"wifi.reenterPassword" = "Ressaisir le mot de passe";
+"wifi.forgetNetwork" = "Oublier ce réseau";
+"settings.network.wifiJoining" = "Rejoindre les réseaux depuis le panneau";
+"settings.network.wifiJoining.description" = "Touchez un réseau dans le panneau d'état pour le rejoindre. Les mots de passe sont stockés uniquement dans le trousseau de l'app, jamais lus depuis les éléments système. L'accès à la localisation est requis pour voir les noms de réseau.";

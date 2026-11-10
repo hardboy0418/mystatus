@@ -20,6 +20,13 @@ struct WiFiNetworkListView: View {
     let showsMore: Bool
     let onSetShowsDetails: (Bool) -> Void
     let onSetShowsMore: (Bool) -> Void
+    /// In-app joining (opt-in experiment). Defaults keep previews and fixtures
+    /// on the System-Settings-only path.
+    var onJoin: (WiFiNetworkIdentity) -> Void = { _ in }
+    var onSubmitPassword: (String, Bool) -> Void = { _, _ in }
+    var onCancelJoin: () -> Void = {}
+    var onReenterPassword: () -> Void = {}
+    var onForgetIssueCredential: () -> Void = {}
 
     /// The panel owns one outer scroll surface (#237); this page must not add a
     /// second one on top of it.
@@ -81,6 +88,27 @@ struct WiFiNetworkListView: View {
                 .buttonStyle(.plain)
                 .help(localization.string(.networkActionShareInternetHelp))
         }
+        .sheet(item: passwordPromptBinding) { network in
+            WiFiPasswordSheet(
+                network: network,
+                onJoin: { password, remember in
+                    onSubmitPassword(password, remember)
+                },
+                onCancel: onCancelJoin
+            )
+            .environmentObject(localization)
+        }
+    }
+
+    /// Drives the password sheet from the panel state. The sheet cannot set the
+    /// state itself, so dismissal routes through `onCancelJoin`.
+    private var passwordPromptBinding: Binding<WiFiNetwork?> {
+        Binding(
+            get: { state.passwordPromptNetwork },
+            set: { newValue in
+                if newValue == nil { onCancelJoin() }
+            }
+        )
     }
 
     private var networkSections: some View {
@@ -202,9 +230,24 @@ struct WiFiNetworkListView: View {
                     title: message,
                     action: onOpenLocationSettings
                 )
+            case .joinIssue:
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(message)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                    HStack(spacing: 12) {
+                        Button(localization.string(.wifiReenterPassword), action: onReenterPassword)
+                            .buttonStyle(.plain)
+                            .font(.caption)
+                        Button(localization.string(.wifiForgetNetwork), action: onForgetIssueCredential)
+                            .buttonStyle(.plain)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             default:
                 HStack(spacing: 8) {
-                    if state.isScanning { ProgressView().controlSize(.small) }
+                    if state.isScanning || state.isJoining { ProgressView().controlSize(.small) }
                     Text(message)
                 }
                 .font(.caption)
@@ -219,7 +262,14 @@ struct WiFiNetworkListView: View {
 
     private func networkRow(_ row: PanelWiFiNetworkRow) -> some View {
         Button {
-            if row.opensSettings { onOpenWiFiSettings() }
+            switch row.action {
+            case .openSettings:
+                onOpenWiFiSettings()
+            case .join:
+                onJoin(row.key)
+            case .none:
+                break
+            }
         } label: {
             HStack(alignment: .center, spacing: 10) {
                 if row.selected {
@@ -261,7 +311,7 @@ struct WiFiNetworkListView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!row.opensSettings)
+        .disabled(row.action == .none || state.isJoining)
         .overlay(alignment: .leading) {
             if row.selected && !row.opensSettings {
                 // A disabled button dims its whole label, but connection state
@@ -297,5 +347,49 @@ private struct WiFiDetailsView: View {
         }
         .padding(.leading, 26)
         .font(.caption)
+    }
+}
+
+/// The password prompt for the in-app joining experiment. The password goes to
+/// CoreWLAN and, only on success and when the box stays ticked, to the app's
+/// own keychain item — never to defaults or the system AirPort items.
+private struct WiFiPasswordSheet: View {
+    @EnvironmentObject private var localization: Localization
+    let network: WiFiNetwork
+    let onJoin: (String, Bool) -> Void
+    let onCancel: () -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var password = ""
+    @State private var rememberPassword = true
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text(localization.string(.wifiJoinNetwork))
+                .font(.headline)
+            Text(network.ssid.isEmpty ? localization.string(.wifiHiddenNetwork) : network.ssid)
+                .lineLimit(1)
+            SecureField(localization.string(.wifiPassword), text: $password)
+            Toggle(localization.string(.wifiRememberPassword), isOn: $rememberPassword)
+            Text(localization.string(.wifiPasswordKeychainNote))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Button(localization.string(.commonCancel)) {
+                    onCancel()
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+                Spacer()
+                Button(localization.string(.wifiJoin)) {
+                    onJoin(password, rememberPassword)
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(password.isEmpty)
+            }
+        }
+        .padding(20)
+        .frame(width: 320)
     }
 }

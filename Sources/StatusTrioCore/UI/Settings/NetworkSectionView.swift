@@ -102,6 +102,16 @@ struct NetworkSectionView: View {
                 subtitle: localization.string(.settingsNetworkShowLocalIPDescription),
                 isOn: $store.showsLocalIPAddress
             )
+
+            SettingsDivider()
+
+            SettingsToggleRow(
+                symbol: "wifi.router",
+                tint: .blue,
+                title: localization.string(.settingsNetworkWiFiJoining),
+                subtitle: localization.string(.settingsNetworkWiFiJoiningDescription),
+                isOn: $store.allowsInAppWiFiJoining
+            )
         }
     }
 

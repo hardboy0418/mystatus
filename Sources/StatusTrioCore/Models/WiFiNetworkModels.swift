@@ -29,6 +29,15 @@ enum WiFiSecurityKind: Int, CaseIterable, Equatable, Hashable, Sendable {
     var requiresPassword: Bool {
         self != .open && self != .owe && self != .oweTransition && self != .unknown
     }
+
+    var isEnterprise: Bool {
+        switch self {
+        case .wpaEnterprise, .wpaEnterpriseMixed, .wpa2Enterprise, .enterprise, .wpa3Enterprise:
+            true
+        default:
+            false
+        }
+    }
 }
 
 struct WiFiNetworkIdentity: Equatable, Hashable, Sendable {
@@ -136,6 +145,9 @@ struct WiFiNetwork: Identifiable, Equatable, Sendable {
 enum WiFiNetworkRowAction: Equatable, Sendable {
     case none
     case openSettings
+    /// In-app joining (opt-in experiment): the popover asks for a password and
+    /// associates through CoreWLAN itself instead of opening System Settings.
+    case join
 }
 
 enum WiFiNetworkSection: Equatable, Sendable {
@@ -172,10 +184,14 @@ enum WiFiNetworkPresentation {
         wifiState == .hotspot && network.isConnected ? "personalhotspot" : nil
     }
 
-    /// Status Trio never joins a network itself, so every row other than the
-    /// current connection hands the job to the system Wi-Fi pane.
-    static func action(for network: WiFiNetwork) -> WiFiNetworkRowAction {
-        network.isConnected ? .none : .openSettings
+    /// By default every row other than the current connection hands the job to
+    /// the system Wi-Fi pane. When the opt-in in-app joining experiment is on,
+    /// a non-enterprise network is joined from the popover instead; enterprise
+    /// (802.1X) networks still need the system pane.
+    static func action(for network: WiFiNetwork, allowsJoining: Bool = false) -> WiFiNetworkRowAction {
+        if network.isConnected { return .none }
+        guard allowsJoining, !network.security.isEnterprise else { return .openSettings }
+        return .join
     }
 
     /// The details row names the action it performs, so its caption and its
@@ -240,14 +256,50 @@ enum WiFiListState: Equatable, Sendable {
     case noInterface
     case permissionDenied
     case failed
+    // In-app joining flow states (opt-in experiment). CoreWLAN reports
+    // association failures without a stable error taxonomy, so a failure is
+    // never presented as "wrong password" — only as a generic failure with a
+    // re-enter/forget healing path.
+    case needsPassword
+    case connecting(WiFiNetworkIdentity)
+    case connectionFailed
+    case connectionTimedOut
+    case networkUnavailable
 
     var isScanning: Bool {
         if case .scanning = self { return true }
         return false
     }
 
+    var isConnectionFlow: Bool {
+        switch self {
+        case .needsPassword, .connecting:
+            true
+        default:
+            false
+        }
+    }
+
     /// Keep the refresh affordance in sync with the controller's scan gate.
-    var allowsRefresh: Bool { !isScanning }
+    var allowsRefresh: Bool { !isScanning && !isConnectionFlow }
+}
+
+/// The association half of the CoreWLAN worker seam. Kept separate from the
+/// scan result so a test double can answer one without the other.
+enum WiFiAssociationWorkerResult: Sendable {
+    case success(WiFiConnectionDetails)
+    case networkUnavailable
+    case timedOut
+    case failed
+}
+
+/// Result of looking up an app-owned Wi-Fi credential. The app never reads the
+/// system "AirPort network password" items, so the outcome cannot be a
+/// cancelled or denied authorization prompt — only present, absent, or broken.
+enum WiFiCredentialLookup: Equatable, Sendable {
+    case credential(String)
+    case noCredential
+    case readFailed
 }
 
 struct AsyncRequestGate: Sendable {

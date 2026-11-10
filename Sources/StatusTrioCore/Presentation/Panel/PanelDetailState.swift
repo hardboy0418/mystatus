@@ -44,7 +44,9 @@ struct PanelWiFiNetworkRow: Equatable, Sendable {
     let securityMarker: String?
     let selected: Bool
     let accessibilityLabel: String
-    let opensSettings: Bool
+    let action: WiFiNetworkRowAction
+
+    var opensSettings: Bool { action == .openSettings }
 }
 
 struct WiFiPanelState: Equatable, Sendable {
@@ -62,6 +64,9 @@ struct WiFiPanelState: Equatable, Sendable {
     let message: String?
     let messageIntent: PanelSummaryIntent
     let showsConnectionDetails: Bool
+    let passwordPromptNetwork: WiFiNetwork?
+    let joinIssueNetwork: WiFiNetwork?
+    let isJoining: Bool
 
     init(
         detail: PanelDetailState,
@@ -77,7 +82,13 @@ struct WiFiPanelState: Equatable, Sendable {
         isScanning: Bool,
         message: String?,
         messageIntent: PanelSummaryIntent,
-        showsConnectionDetails: Bool = false
+        showsConnectionDetails: Bool = false,
+        /// Non-nil while the password sheet is up for this network.
+        passwordPromptNetwork: WiFiNetwork? = nil,
+        /// Non-nil while a join failure/timeout is shown with healing actions.
+        joinIssueNetwork: WiFiNetwork? = nil,
+        /// True while an association is in flight (drives the spinner).
+        isJoining: Bool = false
     ) {
         self.detail = detail
         self.collapsedDetailRowCount = collapsedDetailRowCount
@@ -93,6 +104,9 @@ struct WiFiPanelState: Equatable, Sendable {
         self.message = message
         self.messageIntent = messageIntent
         self.showsConnectionDetails = showsConnectionDetails
+        self.passwordPromptNetwork = passwordPromptNetwork
+        self.joinIssueNetwork = joinIssueNetwork
+        self.isJoining = isJoining
     }
 
     func visibleDetailRows(expanded: Bool) -> [PanelDetailRow] {

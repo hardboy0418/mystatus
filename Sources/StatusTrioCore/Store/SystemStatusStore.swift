@@ -193,6 +193,7 @@ final class SystemStatusStore: ObservableObject {
     private var externalBrightnessSettingsCancellable: AnyCancellable?
     private weak var boundExternalBrightnessSettings: SettingsStore?
     private var localIPSettingsCancellable: AnyCancellable?
+    private var wifiJoiningSettingsCancellable: AnyCancellable?
     private var applicationEnergySettingsCancellable: AnyCancellable?
     private var isApplicationEnergyEnabled = false
     private var isApplicationEnergySystemAsleep = false
@@ -1411,6 +1412,18 @@ final class SystemStatusStore: ObservableObject {
                 guard let self else { return }
                 self.isLocalIPEnabled = enabled
                 self.updateLocalIPActivation()
+            }
+    }
+
+    /// Keeps the popover-joining experiment switch in sync with the Wi-Fi
+    /// list controller. The controller holds the flag itself so the join
+    /// entry points can guard on it without hopping actors per tap.
+    func bindWiFiJoiningSettings(_ settings: SettingsStore) {
+        guard !hasStopped else { return }
+        wifiJoiningSettingsCancellable = settings.$allowsInAppWiFiJoining
+            .removeDuplicates()
+            .sink { [weak self] enabled in
+                self?.wifiNetworks.allowsJoining = enabled
             }
     }
 

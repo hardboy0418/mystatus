@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "在 AirPods 輸出列顯示空間音訊選項（關閉/固定/頭部追蹤）。目前僅支援 AirPods。";
 "settings.audio.conversationAwarenessControlsTitle" = "顯示對話感知控制";
 "settings.audio.conversationAwarenessControlsDescription" = "在 AirPods 輸出列顯示對話感知開關。目前僅支援 AirPods。";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "正在加入 %@…";
+"wifi.connectionFailed" = "無法加入此網路。請檢查密碼後再試一次。";
+"wifi.connectionTimedOut" = "加入此網路逾時。";
+"wifi.networkUnavailable" = "此網路已無法使用。";
+"wifi.joinNetwork" = "加入 Wi-Fi 網路";
+"wifi.password" = "密碼";
+"wifi.rememberPassword" = "在鑰匙圈中記住密碼";
+"wifi.passwordKeychainNote" = "密碼只會儲存在你的鑰匙圈中，不會寫入應用程式設定。";
+"wifi.join" = "加入";
+"wifi.reenterPassword" = "重新輸入密碼";
+"wifi.forgetNetwork" = "忘記此網路";
+"settings.network.wifiJoining" = "在面板中加入網路";
+"settings.network.wifiJoiningDescription" = "在狀態面板中點按網路即可加入。密碼僅保存在本應用自己的鑰匙圈項目中，絕不讀取系統已存密碼。顯示網路名稱需要定位權限。";

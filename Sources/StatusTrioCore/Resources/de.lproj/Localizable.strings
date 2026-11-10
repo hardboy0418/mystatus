@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Zeigt die Optionen für räumliches Audio (Aus/Fixiert/Kopftracking) in der AirPods-Ausgabezeile. Derzeit nur AirPods.";
 "settings.audio.conversationAwarenessControlsTitle" = "Sprachbewusstsein-Steuerung anzeigen";
 "settings.audio.conversationAwarenessControlsDescription" = "Zeigt den Schalter für Sprachbewusstsein in der AirPods-Ausgabezeile. Derzeit nur AirPods.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Verbindung mit %@ wird hergestellt…";
+"wifi.connectionFailed" = "Dem Netzwerk konnte nicht beigetreten werden. Prüfe das Passwort und versuche es erneut.";
+"wifi.connectionTimedOut" = "Zeitüberschreitung beim Verbinden mit diesem Netzwerk.";
+"wifi.networkUnavailable" = "Dieses Netzwerk ist nicht mehr verfügbar.";
+"wifi.joinNetwork" = "Wi‑Fi-Netzwerk beitreten";
+"wifi.password" = "Passwort";
+"wifi.rememberPassword" = "Passwort im Schlüsselbund merken";
+"wifi.passwordKeychainNote" = "Passwörter werden nur im Schlüsselbund gespeichert, niemals in den App-Einstellungen.";
+"wifi.join" = "Beitreten";
+"wifi.reenterPassword" = "Passwort erneut eingeben";
+"wifi.forgetNetwork" = "Dieses Netzwerk entfernen";
+"settings.network.wifiJoining" = "Netzwerke aus dem Panel beitreten";
+"settings.network.wifiJoining.description" = "Tippe im Statuspanel auf ein Netzwerk, um ihm beizutreten. Passwörter werden nur in den eigenen Schlüsselbund-Einträgen der App gespeichert, niemals aus den Systemeinträgen gelesen. Erfordert Ortungszugriff für Netzwerknamen.";

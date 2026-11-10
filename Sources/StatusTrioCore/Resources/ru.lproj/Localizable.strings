@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Показывает параметры пространственного звука (Выкл/Фиксированный/Отслеживание головы) в строке вывода AirPods. Сейчас только AirPods.";
 "settings.audio.conversationAwarenessControlsTitle" = "Показывать элементы управления распознаванием речи";
 "settings.audio.conversationAwarenessControlsDescription" = "Показывает переключатель распознавания речи в строке вывода AirPods. Сейчас только AirPods.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Подключение к %@…";
+"wifi.connectionFailed" = "Не удалось подключиться к этой сети. Проверьте пароль и повторите попытку.";
+"wifi.connectionTimedOut" = "Истекло время подключения к этой сети.";
+"wifi.networkUnavailable" = "Эта сеть больше недоступна.";
+"wifi.joinNetwork" = "Подключение к сети Wi-Fi";
+"wifi.password" = "Пароль";
+"wifi.rememberPassword" = "Сохранить пароль в связке ключей";
+"wifi.passwordKeychainNote" = "Пароли хранятся только в связке ключей, а не в настройках приложения.";
+"wifi.join" = "Подключиться";
+"wifi.reenterPassword" = "Ввести пароль заново";
+"wifi.forgetNetwork" = "Забыть эту сеть";
+"settings.network.wifiJoining" = "Подключение к сетям из панели";
+"settings.network.wifiJoining.description" = "Нажмите на сеть в панели состояния, чтобы подключиться. Пароли хранятся только в собственных записях связки ключей приложения и никогда не читаются из системных. Для отображения имён сетей требуется доступ к геолокации.";

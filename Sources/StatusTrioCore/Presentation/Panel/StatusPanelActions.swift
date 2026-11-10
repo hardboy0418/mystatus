@@ -41,6 +41,11 @@ final class StatusPanelActions {
     private let closeWiFiDetails: () -> Void
     private let setWiFiPowerCommand: (Bool) -> Void
     private let refreshWiFiCommand: (WiFiNameAccess) -> Void
+    private let joinWiFiNetworkCommand: (WiFiNetworkIdentity) -> Void
+    private let submitWiFiPasswordCommand: (String, Bool) -> Void
+    private let cancelWiFiJoinCommand: () -> Void
+    private let reenterWiFiPasswordCommand: () -> Void
+    private let forgetWiFiIssueCredentialCommand: () -> Void
     private let openWiredDetails: () -> Void
     private let closeWiredDetails: () -> Void
     private let holdBluetoothSummary: () -> Void
@@ -99,6 +104,11 @@ final class StatusPanelActions {
         setWiFiPower: @escaping (Bool) -> Void = { _ in },
         setVPNPower: @escaping (Bool) -> Void = { _ in },
         refreshWiFi: @escaping (WiFiNameAccess) -> Void = { _ in },
+        joinWiFiNetwork: @escaping (WiFiNetworkIdentity) -> Void = { _ in },
+        submitWiFiPassword: @escaping (String, Bool) -> Void = { _, _ in },
+        cancelWiFiJoin: @escaping () -> Void = {},
+        reenterWiFiPassword: @escaping () -> Void = {},
+        forgetWiFiIssueCredential: @escaping () -> Void = {},
         openWiredDetails: @escaping () -> Void = {},
         closeWiredDetails: @escaping () -> Void = {},
         holdBluetoothSummary: @escaping () -> Void = {},
@@ -145,6 +155,11 @@ final class StatusPanelActions {
         self.closeWiFiDetails = closeWiFiDetails
         self.setWiFiPowerCommand = setWiFiPower
         self.refreshWiFiCommand = refreshWiFi
+        self.joinWiFiNetworkCommand = joinWiFiNetwork
+        self.submitWiFiPasswordCommand = submitWiFiPassword
+        self.cancelWiFiJoinCommand = cancelWiFiJoin
+        self.reenterWiFiPasswordCommand = reenterWiFiPassword
+        self.forgetWiFiIssueCredentialCommand = forgetWiFiIssueCredential
         self.openWiredDetails = openWiredDetails
         self.closeWiredDetails = closeWiredDetails
         self.holdBluetoothSummary = holdBluetoothSummary
@@ -225,6 +240,14 @@ final class StatusPanelActions {
             setWiFiPower: { store.setWiFiPower($0) },
             setVPNPower: { store.setVPNPower($0) },
             refreshWiFi: { store.wifiNetworks.refreshNow(nameAccess: $0) },
+            joinWiFiNetwork: { identity in
+                guard let network = store.wifiNetworks.networks.first(where: { $0.identity == identity }) else { return }
+                store.wifiNetworks.join(network)
+            },
+            submitWiFiPassword: { store.wifiNetworks.submitPassword($0, rememberPassword: $1) },
+            cancelWiFiJoin: { store.wifiNetworks.cancelJoin() },
+            reenterWiFiPassword: { store.wifiNetworks.reenterPasswordForIssueNetwork() },
+            forgetWiFiIssueCredential: { store.wifiNetworks.forgetIssueNetworkCredential() },
             openWiredDetails: { store.activatePrimaryLinkPanel() },
             closeWiredDetails: { store.closePrimaryLinkPanel() },
             holdBluetoothSummary: { store.bluetoothDevices.holdVisibleSurface(BluetoothDeviceController.bluetoothSummarySurfaceToken) },
@@ -410,6 +433,14 @@ final class StatusPanelActions {
     func setVPNPower(_ enabled: Bool) { setVPNPowerCommand(enabled) }
 
     func refreshWiFi() { refreshWiFiCommand(wifiNameAccess()) }
+
+    func joinWiFiNetwork(_ identity: WiFiNetworkIdentity) { joinWiFiNetworkCommand(identity) }
+    func submitWiFiPassword(_ password: String, rememberPassword: Bool) {
+        submitWiFiPasswordCommand(password, rememberPassword)
+    }
+    func cancelWiFiJoin() { cancelWiFiJoinCommand() }
+    func reenterWiFiPassword() { reenterWiFiPasswordCommand() }
+    func forgetWiFiIssueCredential() { forgetWiFiIssueCredentialCommand() }
     private func bluetoothDevice(address: String) -> BluetoothDevice? {
         let key = BluetoothBatteryReader.normalizedAddress(address)
         guard !key.isEmpty else { return nil }

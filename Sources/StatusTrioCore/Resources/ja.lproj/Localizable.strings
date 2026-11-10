@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "AirPods の出力行に空間オーディオのオプション（オフ/固定/頭部トラッキング）を表示します。現在は AirPods のみ対応。";
 "settings.audio.conversationAwarenessControlsTitle" = "会話認識のコントロールを表示";
 "settings.audio.conversationAwarenessControlsDescription" = "AirPods の出力行に会話認識のスイッチを表示します。現在は AirPods のみ対応。";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "%@に接続中…";
+"wifi.connectionFailed" = "このネットワークに接続できませんでした。パスワードを確認して再試行してください。";
+"wifi.connectionTimedOut" = "このネットワークへの接続がタイムアウトしました。";
+"wifi.networkUnavailable" = "このネットワークは利用できなくなりました。";
+"wifi.joinNetwork" = "Wi-Fi ネットワークに接続";
+"wifi.password" = "パスワード";
+"wifi.rememberPassword" = "パスワードをキーチェーンに保存";
+"wifi.passwordKeychainNote" = "パスワードはキーチェーンにのみ保存され、アプリの設定には保存されません。";
+"wifi.join" = "接続";
+"wifi.reenterPassword" = "パスワードを再入力";
+"wifi.forgetNetwork" = "このネットワークを削除";
+"settings.network.wifiJoining" = "パネルからネットワークに参加";
+"settings.network.wifiJoining.description" = "ステータスパネルでネットワークをタップして参加します。パスワードはこのアプリ専用のキーチェーン項目にのみ保存され、システムの項目は読み取りません。ネットワーク名の表示には位置情報へのアクセスが必要です。";

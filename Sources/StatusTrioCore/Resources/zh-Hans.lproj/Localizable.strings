@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "在 AirPods 输出行显示空间音频选项（关闭/固定/头部跟踪）。目前仅支持 AirPods。";
 "settings.audio.conversationAwarenessControlsTitle" = "显示对话感知控制";
 "settings.audio.conversationAwarenessControlsDescription" = "在 AirPods 输出行显示对话感知开关。目前仅支持 AirPods。";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "正在加入 %@…";
+"wifi.connectionFailed" = "无法加入此网络。请检查密码后重试。";
+"wifi.connectionTimedOut" = "加入此网络超时。";
+"wifi.networkUnavailable" = "此网络已不可用。";
+"wifi.joinNetwork" = "加入 Wi-Fi 网络";
+"wifi.password" = "密码";
+"wifi.rememberPassword" = "将密码记入钥匙串";
+"wifi.passwordKeychainNote" = "密码只保存在钥匙串中，绝不会写入应用设置。";
+"wifi.join" = "加入";
+"wifi.reenterPassword" = "重新输入密码";
+"wifi.forgetNetwork" = "忘记此网络";
+"settings.network.wifiJoining" = "在面板中加入网络";
+"settings.network.wifiJoining.description" = "在状态面板中点按网络即可加入。密码仅保存在本应用自己的钥匙串条目中，绝不读取系统已存密码。显示网络名称需要定位权限。";

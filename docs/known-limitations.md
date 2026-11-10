@@ -1,5 +1,14 @@
 # Known limitations
 
+> **Fork note (hardboy0418/mystatus):** this fork reintroduces in-app Wi-Fi
+> joining as an opt-in experiment (**Settings › Network › Join Networks from
+> the Panel**, off by default), following the deferred design in
+> `docs/superpowers/specs/2026-09-21-wifi-switching-deferred-design.md`:
+> credentials live only in the app's own keychain items, the system AirPort
+> items are never read, and a failed join offers re-enter/forget healing
+> instead of guessing at password errors. The upstream policy below still
+> describes the released app when the switch is off.
+
 Status Trio is a status app, not a system control panel. A few boundaries are worth
 stating plainly, so the popover does what users expect and the same questions do not
 have to be answered one issue at a time.

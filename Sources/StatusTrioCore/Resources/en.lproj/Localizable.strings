@@ -876,3 +876,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Shows the Spatial Audio options (Off/Fixed/Head Tracking) on the AirPods output row. Currently AirPods only.";
 "settings.audio.conversationAwarenessControlsTitle" = "Show Conversation Awareness controls";
 "settings.audio.conversationAwarenessControlsDescription" = "Shows the Conversation Awareness toggle on the AirPods output row. Currently AirPods only.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Joining %@…";
+"wifi.connectionFailed" = "Could not join this network. Check its password and try again.";
+"wifi.connectionTimedOut" = "Joining this network timed out.";
+"wifi.networkUnavailable" = "This network is no longer available.";
+"wifi.joinNetwork" = "Join Wi-Fi Network";
+"wifi.password" = "Password";
+"wifi.rememberPassword" = "Remember password in Keychain";
+"wifi.passwordKeychainNote" = "Passwords are stored only in your Keychain, never in app settings.";
+"wifi.join" = "Join";
+"wifi.reenterPassword" = "Re-enter Password";
+"wifi.forgetNetwork" = "Forget This Network";
+"settings.network.wifiJoining" = "Join Networks from the Panel";
+"settings.network.wifiJoining.description" = "Tap a network in the status panel to join it. Passwords are stored only in your Keychain under this app, never read from the system items. Requires location access to see network names.";

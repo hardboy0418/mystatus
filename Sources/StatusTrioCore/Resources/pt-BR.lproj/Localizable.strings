@@ -877,3 +877,18 @@
 "settings.audio.spatialAudioControlsDescription" = "Mostra as opções de áudio espacial (Desligado/Fixo/Rastreamento de cabeça) na linha de saída dos AirPods. Atualmente apenas AirPods.";
 "settings.audio.conversationAwarenessControlsTitle" = "Mostrar controles de Consciência de Conversa";
 "settings.audio.conversationAwarenessControlsDescription" = "Mostra o interruptor de Consciência de Conversa na linha de saída dos AirPods. Atualmente apenas AirPods.";
+
+/* In-app Wi-Fi joining (opt-in experiment). */
+"wifi.connecting" = "Conectando a %@…";
+"wifi.connectionFailed" = "Não foi possível conectar a esta rede. Verifique a senha e tente novamente.";
+"wifi.connectionTimedOut" = "O tempo limite de conexão com esta rede foi excedido.";
+"wifi.networkUnavailable" = "Esta rede não está mais disponível.";
+"wifi.joinNetwork" = "Conectar a uma rede Wi-Fi";
+"wifi.password" = "Senha";
+"wifi.rememberPassword" = "Lembrar a senha nas Chaves";
+"wifi.passwordKeychainNote" = "As senhas são armazenadas apenas nas suas Chaves, nunca nos ajustes do app.";
+"wifi.join" = "Conectar";
+"wifi.reenterPassword" = "Digitar a senha novamente";
+"wifi.forgetNetwork" = "Esquecer esta rede";
+"settings.network.wifiJoining" = "Conectar-se a redes pelo painel";
+"settings.network.wifiJoining.description" = "Toque em uma rede no painel de status para se conectar. As senhas são armazenadas apenas nas entradas do chaveiro deste app, nunca lidas dos itens do sistema. Requer acesso à localização para ver os nomes das redes.";

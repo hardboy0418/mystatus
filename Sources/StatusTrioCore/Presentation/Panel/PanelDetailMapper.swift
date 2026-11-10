@@ -269,17 +269,20 @@ enum PanelDetailMapper {
         networks: [WiFiNetwork],
         details: WiFiConnectionDetails,
         listState: WiFiListState,
-        localization: Localization
+        localization: Localization,
+        allowsJoining: Bool = false,
+        passwordPromptNetwork: WiFiNetwork? = nil,
+        joinIssueNetwork: WiFiNetwork? = nil
     ) -> WiFiPanelState {
         let groups = WiFiNetworkPresentation.grouped(networks, wifiState: status.state)
         let personalHotspotRows = groups.personalHotspot.map {
-            wifiRow($0, wifiState: status.state, localization: localization)
+            wifiRow($0, wifiState: status.state, localization: localization, allowsJoining: allowsJoining)
         }
         let knownRows = groups.known.map {
-            wifiRow($0, wifiState: status.state, localization: localization)
+            wifiRow($0, wifiState: status.state, localization: localization, allowsJoining: allowsJoining)
         }
         let otherRows = groups.other.map {
-            wifiRow($0, wifiState: status.state, localization: localization)
+            wifiRow($0, wifiState: status.state, localization: localization, allowsJoining: allowsJoining)
         }
         let hasVisibleNetworks = !personalHotspotRows.isEmpty || !knownRows.isEmpty || !otherRows.isEmpty
         let message: String?
@@ -325,6 +328,25 @@ enum PanelDetailMapper {
         case .ready where !hasVisibleNetworks:
             message = localization.string(.wifiNoNetworks)
             intent = .none
+        case .needsPassword:
+            // The password sheet carries this state; no inline message.
+            message = nil
+            intent = .none
+        case .connecting(let identity):
+            let name = identity.ssid.isEmpty
+                ? localization.string(.wifiHiddenNetwork)
+                : identity.ssid
+            message = localization.format(.wifiConnecting, name)
+            intent = .none
+        case .connectionFailed:
+            message = localization.string(.wifiConnectionFailed)
+            intent = .joinIssue
+        case .connectionTimedOut:
+            message = localization.string(.wifiConnectionTimedOut)
+            intent = .joinIssue
+        case .networkUnavailable:
+            message = localization.string(.wifiNetworkUnavailable)
+            intent = .joinIssue
         case .idle, .ready:
             message = nil
             intent = .none
@@ -361,22 +383,34 @@ enum PanelDetailMapper {
             messageIntent: intent,
             showsConnectionDetails: details.ssid != nil
                 || knownRows.contains(where: \.selected)
-                || personalHotspotRows.contains(where: \.selected)
+                || personalHotspotRows.contains(where: \.selected),
+            passwordPromptNetwork: passwordPromptNetwork,
+            joinIssueNetwork: joinIssueNetwork,
+            isJoining: listState.isConnectionFlow && passwordPromptNetwork == nil
         )
     }
 
     private static func wifiRow(
         _ network: WiFiNetwork,
         wifiState: WiFiState,
-        localization: Localization
+        localization: Localization,
+        allowsJoining: Bool
     ) -> PanelWiFiNetworkRow {
         let name = network.ssid.isEmpty ? localization.string(.wifiHiddenNetwork) : network.ssid
-        let action = WiFiNetworkPresentation.action(for: network)
+        let action = WiFiNetworkPresentation.action(for: network, allowsJoining: allowsJoining)
         let connected = network.isConnected
         let description = connected
             ? localization.string(.wifiConnected)
             : localization.string(.wifiNotConnected)
-        let actionText = action == .openSettings ? ", \(localization.string(.wifiActionOpenSettings))" : ""
+        let actionText: String
+        switch action {
+        case .openSettings:
+            actionText = ", \(localization.string(.wifiActionOpenSettings))"
+        case .join:
+            actionText = ", \(localization.string(.wifiJoinNetwork))"
+        case .none:
+            actionText = ""
+        }
         let bars = network.rssi.map { StatusMappings.wifiBars(rssi: $0) }
         let signal: IconSymbolSource
         if let bars, bars > 0 {
@@ -392,7 +426,7 @@ enum PanelDetailMapper {
             securityMarker: network.security.requiresPassword ? "lock.fill" : nil,
             selected: connected,
             accessibilityLabel: "\(name), \(description)\(actionText)",
-            opensSettings: action == .openSettings
+            action: action
         )
     }
 

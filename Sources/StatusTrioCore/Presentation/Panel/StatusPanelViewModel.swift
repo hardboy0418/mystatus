@@ -699,6 +699,16 @@ final class StatusPanelViewModel: ObservableObject {
                 coalesceControllerUpdate(.wifiDetails)
             }
             .store(in: &cancellables)
+        Publishers.CombineLatest(
+            store.wifiNetworks.$passwordPromptNetwork,
+            store.wifiNetworks.$joinIssueNetwork
+        )
+            .dropFirst()
+            .sink { [weak self] _, _ in
+                guard let self, store.wifiNetworks.isActive else { return }
+                coalesceControllerUpdate(.wifiDetails)
+            }
+            .store(in: &cancellables)
         store.primaryLink.$details
             .dropFirst()
             .sink { [weak self] _ in
@@ -1087,7 +1097,10 @@ final class StatusPanelViewModel: ObservableObject {
             networks: store.wifiNetworks.networks,
             details: store.wifiNetworks.details,
             listState: store.wifiNetworks.state,
-            localization: localization
+            localization: localization,
+            allowsJoining: settings.allowsInAppWiFiJoining,
+            passwordPromptNetwork: store.wifiNetworks.passwordPromptNetwork,
+            joinIssueNetwork: store.wifiNetworks.joinIssueNetwork
         )
         if wifiDetails != state { wifiDetails = state }
     }
